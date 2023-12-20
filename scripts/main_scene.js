@@ -25,13 +25,31 @@ class MainScene extends Phaser.Scene {
     const hanako = this.physics.add.sprite(750, 400, 'hanako');
     this.hanako = hanako
 
+    let staticGroup = this.physics.add.group();// 動く物体をまとめる
+
     for (let i = 0; i < 5; i++) {
       let randx = Phaser.Math.Between(25, 775); // y は　50～750の間の値
       let randy = Phaser.Math.Between(25, 425);  // y は　50～200の間の値
-      let randx2 = Phaser.Math.Between(25, 775); // y は　50～750の間の値
-      let randy2 = Phaser.Math.Between(25, 425);  // y は　50～200の間の値
-      this.add.image(randx, randy, 'apple'); //ランダムな場所に生成
-      this.add.image(randx2, randy2, 'orange'); //ランダムな場所に生成
+      staticGroup.create(randx, randy, 'apple');// 星1
+    }
+
+    for (let i = 0; i < 5; i++) {
+      let randx = Phaser.Math.Between(25, 775); // y は　50～750の間の値
+      let randy = Phaser.Math.Between(25, 425);  // y は　50～200の間の値
+      staticGroup.create(randx, randy, 'orange');// 星2
+    }
+
+    this.physics.add.overlap(taro, staticGroup, runitems, null, this);
+    function runitems() {
+      //物理エンジンを止める
+      this.physics.pause();
+    }
+
+    
+    this.physics.add.overlap(hanako, staticGroup, runitems, null, this);
+    function runitems() {
+      //物理エンジンを止める
+      this.physics.pause();
     }
   }
 
