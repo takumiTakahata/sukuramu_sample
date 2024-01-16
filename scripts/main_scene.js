@@ -41,14 +41,15 @@ class MainScene extends Phaser.Scene {
       staticGroup.create(randx, randy, 'orange');// 星2
     }
 
-    // this.physics.add.overlap(taro, staticGroup, runitems, null, this);
-    // function runtaro() {
-    //   this.physics.pause();    // }
+    this.physics.add.overlap(taro, staticGroup, runitems1, null, this);
+    function runitems1() {
+      this.physics.pause(this.add.text(400, 200, 'gameover', { fontsize: '32px', color: 'red' }));
+    }
 
-    
-    this.physics.add.overlap(hanako, staticGroup, runitems, null, this);
-    function runitems(hanako,furit) {
-      this.count += 1 ;
+
+    this.physics.add.overlap(hanako, staticGroup, runitems2, null, this);
+    function runitems2(hanako, furit) {
+      this.count += 1;
       furit.destroy();
     }
   }
@@ -78,9 +79,9 @@ class MainScene extends Phaser.Scene {
       this.hanako.setVelocityX(0);// 横方向の速度を0
       this.hanako.setVelocityY(0);// 縦方向の速度を0
     }
-  
-    if(this.count >= 10){
-      this.physics.pause(this.add.text(400,200,'clear',{fontsize: '32px', color: '#ffffff'}));
+
+    if (this.count >= 10) {
+      this.physics.pause(this.add.text(400, 200, 'clear', { fontsize: '32px', color: '#ffffff' }));
     }
   }
 }
