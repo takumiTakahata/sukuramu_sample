@@ -1,10 +1,12 @@
 // シーンクラス
 // 他のJSファイルから呼び出された場合はシーンを返す
 class MainScene extends Phaser.Scene {
+
   // コンストラクタ
   constructor() {
     // 継承した「Phaser.Scene」クラスのコンストラクタの呼び出し
     super('MainScene');
+    this.count = 0; //取得したフルーツをカウントする
   }
   // シーンの事前読み込み処理
   preload() {
@@ -39,15 +41,15 @@ class MainScene extends Phaser.Scene {
       staticGroup.create(randx, randy, 'orange');// 星2
     }
 
-    this.physics.add.overlap(taro, staticGroup, runitems, null, this);
-    function runitems() {
-      this.physics.pause();
-    }
+    // this.physics.add.overlap(taro, staticGroup, runitems, null, this);
+    // function runtaro() {
+    //   this.physics.pause();    // }
 
     
     this.physics.add.overlap(hanako, staticGroup, runitems, null, this);
-    function runitems() {
-      this.physics.pause();
+    function runitems(hanako,furit) {
+      this.count += 1 ;
+      furit.destroy();
     }
   }
 
@@ -75,6 +77,10 @@ class MainScene extends Phaser.Scene {
       this.taro.setVelocityY(0);// 縦方向の速度を0
       this.hanako.setVelocityX(0);// 横方向の速度を0
       this.hanako.setVelocityY(0);// 縦方向の速度を0
+    }
+  
+    if(this.count >= 10){
+      this.physics.pause(this.add.text(400,200,'clear',{fontsize: '32px', color: '#ffffff'}));
     }
   }
 }
